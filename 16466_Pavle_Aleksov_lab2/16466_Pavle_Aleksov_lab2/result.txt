@@ -1,0 +1,67 @@
+Indexing normal files took 128 milliseconds
+
+Pretrazvanje po objektu klase query: '+sadrzaj:romeo -sadrzaj:gulliver' tipa org.apache.lucene.search.BooleanQuery
+Broj pogodaka: 1
+Pronadjeni fajl je: C:\Users\Pajacar123\eclipse-workspace\16466_Pavle_Aleksov_lab2\Podaci\Romeo and Juliet by William Shakespeare.txt, score: 1.1994779
+Objasnjenje: 1.1994779 = sum of:
+  1.1994779 = weight(sadrzaj:romeo in 1) [BM25Similarity], result of:
+    1.1994779 = score(freq=258.0), computed as boost * idf * tf from:
+      1.2039728 = idf, computed as log(1 + (N - n + 0.5) / (n + 0.5)) from:
+        1 = n, number of documents containing term
+        4 = N, total number of documents with field
+      0.99626654 = tf, computed as freq / (freq + k1 * (1 - b + b * dl / avgdl)) from:
+        258.0 = freq, occurrences of term within document
+        1.2 = k1, term saturation parameter
+        0.75 = b, length normalization parameter
+        18456.0 = dl, length of field (approximate)
+        24909.25 = avgdl, average length of field
+
+
+Pretrazvanje po objektu klase query: '+naslov:romeo -naslov:gulliver' tipa org.apache.lucene.search.BooleanQuery
+Broj pogodaka: 1
+Pronadjeni fajl je: C:\Users\Pajacar123\eclipse-workspace\16466_Pavle_Aleksov_lab2\Podaci\Romeo and Juliet by William Shakespeare.txt, score: 0.6221136
+Objasnjenje: 0.6221136 = sum of:
+  0.6221136 = weight(naslov:romeo in 1) [BM25Similarity], result of:
+    0.6221136 = score(freq=1.0), computed as boost * idf * tf from:
+      1.2039728 = idf, computed as log(1 + (N - n + 0.5) / (n + 0.5)) from:
+        1 = n, number of documents containing term
+        4 = N, total number of documents with field
+      0.5167173 = tf, computed as freq / (freq + k1 * (1 - b + b * dl / avgdl)) from:
+        1.0 = freq, occurrences of term within document
+        1.2 = k1, term saturation parameter
+        0.75 = b, length normalization parameter
+        6.0 = dl, length of field
+        8.5 = avgdl, average length of field
+
+pomnožimo donji za 1.1994779/0.6221136
+___________________________________________________________________________ Classic:
+Indexing normal files took 30 milliseconds
+
+Pretrazvanje po objektu klase query: '+sadrzaj:romeo -sadrzaj:gulliver' tipa org.apache.lucene.search.BooleanQuery
+Broj pogodaka: 1
+Pronadjeni fajl je: C:\Users\Pajacar123\eclipse-workspace\16466_Pavle_Aleksov_lab2\Podaci\Romeo and Juliet by William Shakespeare.txt, score: 0.22657003
+Objasnjenje: 0.22657003 = sum of:
+  0.22657003 = weight(sadrzaj:romeo in 1) [ClassicSimilarity], result of:
+    0.22657003 = score(freq=258.0), product of:
+      1.9162908 = idf, computed as log((docCount+1)/(docFreq+1)) + 1 from:
+        1 = docFreq, number of documents containing term
+        4 = docCount, total number of documents with field
+      16.062378 = tf(freq=258.0), with freq of:
+        258.0 = freq, occurrences of term within document
+      0.007360905 = fieldNorm
+
+
+Pretrazvanje po objektu klase query: '+naslov:romeo -naslov:gulliver' tipa org.apache.lucene.search.BooleanQuery
+Broj pogodaka: 1
+Pronadjeni fajl je: C:\Users\Pajacar123\eclipse-workspace\16466_Pavle_Aleksov_lab2\Podaci\Romeo and Juliet by William Shakespeare.txt, score: 0.78232247
+Objasnjenje: 0.78232247 = sum of:
+  0.78232247 = weight(naslov:romeo in 1) [ClassicSimilarity], result of:
+    0.78232247 = score(freq=1.0), product of:
+      1.9162908 = idf, computed as log((docCount+1)/(docFreq+1)) + 1 from:
+        1 = docFreq, number of documents containing term
+        4 = docCount, total number of documents with field
+      1.0 = tf(freq=1.0), with freq of:
+        1.0 = freq, occurrences of term within document
+      0.4082483 = fieldNorm
+
+tf*fieldNorm im se razlikuje. Donji treba da se boostuje za (gornji tf * gornji fieldNorm / donji tf * donji fieldNorm) : 16.062378*0.007360905/0.4082483 = 0.28961205
